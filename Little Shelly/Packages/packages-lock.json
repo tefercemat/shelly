@@ -72,6 +72,15 @@
       "source": "builtin",
       "dependencies": {}
     },
+    "com.unity.2d.tilemap.extras": {
+      "version": "file:2d-extras-master",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.modules.tilemap": "1.0.0",
+        "com.unity.2d.tilemap": "1.0.0"
+      }
+    },
     "com.unity.cinemachine": {
       "version": "2.6.2",
       "depth": 0,
@@ -111,6 +120,13 @@
     },
     "com.unity.ide.vscode": {
       "version": "1.2.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.inputsystem": {
+      "version": "1.0.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
