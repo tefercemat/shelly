@@ -10,7 +10,7 @@ public class EnemyHeadBump : MonoBehaviour
 		if (other.gameObject.tag == "Player")
 		{
 			// tell the enemy to be stunned
-			this.GetComponentInParent<CrabEnemy>().Stunned();
+			this.GetComponentInParent<CrabEnemy>().TakeDamage();
 
 			// Make the player bounce off the enemy
 			//other.gameObject.GetComponent<PlayerController>().EnemyBounce();

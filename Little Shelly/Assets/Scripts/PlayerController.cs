@@ -36,6 +36,10 @@ public class PlayerController : MonoBehaviour
     const string PLAYER_FALL = "Shelly-Fall";
     private string _currentState;
 
+    // Shooting
+    public Transform firePoint;
+    public GameObject bulletPrefab;
+
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -65,6 +69,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerControls.PlatformsInput.Jump.performed += _ => Jump();
+        playerControls.PlatformsInput.Shoot.performed += _ => Shoot();
     }
 
     // Update is called once per frame
@@ -82,6 +87,17 @@ public class PlayerController : MonoBehaviour
         Vector3 currentPosition = transform.position;
         currentPosition.x += _movementInput * speed * Time.deltaTime;
         transform.position = currentPosition;
+
+        if ((_movementInput > 0) && !_facingRight) // if moving right but facing left
+        {
+            Flip();
+            _facingRight = true;
+        }
+        else if ((_movementInput < 0) && _facingRight) // if moving left but facing right
+        {
+            Flip();
+            _facingRight = false;
+        }
 
         if (IsGrounded())
         {
@@ -122,15 +138,13 @@ public class PlayerController : MonoBehaviour
     void LateUpdate()
     {
         // get the current scale
-        Vector3 localScale = transform.localScale;
+        //Vector3 localScale = transform.localScale;
 
-        if (_movementInput > 0) // moving right so face right{
-            _facingRight = true;
-        else if (_movementInput < 0) // moving left so face left
-            _facingRight = false;
+        
 
         // check to see if scale x is right for the player
         // if not, multiple by -1 to flip a sprite
+        /*
         if (((_facingRight) && (localScale.x < 0)) || ((!_facingRight) && (localScale.x > 0)))
         {
             if (IsGrounded())
@@ -143,6 +157,21 @@ public class PlayerController : MonoBehaviour
 
         // update the scale
         transform.localScale = localScale;
+        */
+
+    }
+
+    void Flip()
+    {
+        _facingRight = !_facingRight;
+        // new way to rotate the player
+        transform.Rotate(0f, 180f, 0f);
+    }
+
+    
+    private void Shoot()
+    {
+        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
     }
 
     private void Jump()

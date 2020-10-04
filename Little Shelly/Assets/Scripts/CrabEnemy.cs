@@ -71,6 +71,13 @@ public class CrabEnemy : MonoBehaviour
     // Direction checker
     private bool _facingRight;
     public float jumpSpeed = 3.0f;
+    //Awake & Sleep
+    private Vector2 startPosition;
+    public float wakeUpDistance = 5f;
+    private bool _isAsleep;
+    public GameObject player;
+    public float minTimeAwake = 5f;
+    private float _awakeTimer;
     /*  ==  End ==   */
 
 
@@ -102,12 +109,31 @@ public class CrabEnemy : MonoBehaviour
         // Setup moving defaults
         _moveTime = 0f;
         _moving = false;
+        _isAsleep = true;
+        _awakeTimer = minTimeAwake;
     }
 
+    private void Start()
+    {
+        startPosition = transform.position;
+    }
 
     // Update is called once per frame
     void Update()
     {
+        _awakeTimer -= Time.deltaTime;
+        //TODO
+        //Debug.Log("_awakeTimer = " + _awakeTimer);
+        if ((Vector2.Distance(transform.position, player.transform.position) <= wakeUpDistance) && _isAsleep) // if within distance and sleeping
+        {
+            _isAsleep = false;
+            WakeUp(true); // time to wake up
+        } else if ((Vector2.Distance(transform.position, player.transform.position) > wakeUpDistance) && !_isAsleep) // if outside distance and awake
+        {
+            _isAsleep = true;
+            WakeUp(false); // go to sleep
+        }
+
         if (Time.time >= _moveTime)
         {
             EnemyMovement();
@@ -224,7 +250,7 @@ public class CrabEnemy : MonoBehaviour
 		}
 	}
 
-    public void Stunned()
+    public void TakeDamage()
     {
         
         StartCoroutine("DieSlowly");
@@ -233,9 +259,12 @@ public class CrabEnemy : MonoBehaviour
     public void WakeUp(bool doWakeUp)
     {
         //do that
-        if (doWakeUp)
+        //minTimeAwake
+
+        if ((doWakeUp) && (_awakeTimer < 0))
         {
             StartCoroutine("WakingUp");
+            _awakeTimer = minTimeAwake;
         } else
         {
             ChangeAnimationState(CRAB_SLEEP);

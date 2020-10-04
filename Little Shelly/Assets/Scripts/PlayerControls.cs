@@ -33,6 +33,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""cb33ec37-d49f-4503-ba9f-a6ab5025992f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -79,6 +87,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f24ceb8a-423c-4917-922f-4dfb1c9ca9ac"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -89,6 +108,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlatformsInput = asset.FindActionMap("PlatformsInput", throwIfNotFound: true);
         m_PlatformsInput_Move = m_PlatformsInput.FindAction("Move", throwIfNotFound: true);
         m_PlatformsInput_Jump = m_PlatformsInput.FindAction("Jump", throwIfNotFound: true);
+        m_PlatformsInput_Shoot = m_PlatformsInput.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -140,12 +160,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private IPlatformsInputActions m_PlatformsInputActionsCallbackInterface;
     private readonly InputAction m_PlatformsInput_Move;
     private readonly InputAction m_PlatformsInput_Jump;
+    private readonly InputAction m_PlatformsInput_Shoot;
     public struct PlatformsInputActions
     {
         private @PlayerControls m_Wrapper;
         public PlatformsInputActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlatformsInput_Move;
         public InputAction @Jump => m_Wrapper.m_PlatformsInput_Jump;
+        public InputAction @Shoot => m_Wrapper.m_PlatformsInput_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_PlatformsInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -161,6 +183,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnJump;
+                @Shoot.started -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnShoot;
             }
             m_Wrapper.m_PlatformsInputActionsCallbackInterface = instance;
             if (instance != null)
@@ -171,6 +196,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
             }
         }
     }
@@ -179,5 +207,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }
