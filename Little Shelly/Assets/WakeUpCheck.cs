@@ -26,7 +26,8 @@ public class WakeUpCheck : MonoBehaviour
         isAsleep = true;
         if (collision.tag == "Player")
         {
-            wakeUpObject.GetComponent<CrabEnemy>().WakeUp(isAsleep);
+            if (wakeUpObject)
+                wakeUpObject.GetComponent<CrabEnemy>().WakeUp(isAsleep);
             
         }
     }
@@ -37,7 +38,8 @@ public class WakeUpCheck : MonoBehaviour
         isAsleep = false;
         if (collision.tag == "Player")
         {
-            wakeUpObject.GetComponent<CrabEnemy>().WakeUp(isAsleep);
+            if (wakeUpObject)
+                wakeUpObject.GetComponent<CrabEnemy>().WakeUp(isAsleep);
 
         }
     }
