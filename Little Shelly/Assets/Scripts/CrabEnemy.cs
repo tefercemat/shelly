@@ -122,15 +122,15 @@ public class CrabEnemy : MonoBehaviour
     void Update()
     {
         _awakeTimer -= Time.deltaTime;
-        //TODO
-        //Debug.Log("_awakeTimer = " + _awakeTimer);
-        if ((Vector2.Distance(transform.position, player.transform.position) <= wakeUpDistance) && _isAsleep) // if within distance and sleeping
+        if (Vector2.Distance(transform.position, player.transform.position) <= wakeUpDistance) // if within distance
         {
-            _isAsleep = false;
-            WakeUp(true); // time to wake up
-        } else if ((Vector2.Distance(transform.position, player.transform.position) > wakeUpDistance) && !_isAsleep) // if outside distance and awake
+            _awakeTimer = minTimeAwake;
+            if (_isAsleep) // and sleeping
+            {
+                WakeUp(true); // time to wake up
+            }
+        }  else if (Vector2.Distance(transform.position, player.transform.position) > wakeUpDistance) // if outside distance
         {
-            _isAsleep = true;
             WakeUp(false); // go to sleep
         }
 
@@ -252,23 +252,21 @@ public class CrabEnemy : MonoBehaviour
 
     public void TakeDamage()
     {
-        
         StartCoroutine("DieSlowly");
     }
 
     public void WakeUp(bool doWakeUp)
     {
-        //do that
-        //minTimeAwake
-
-        if ((doWakeUp) && (_awakeTimer < 0))
+        if (doWakeUp)
         {
+            _isAsleep = false;
             StartCoroutine("WakingUp");
             _awakeTimer = minTimeAwake;
-        } else
+        } else if ((!doWakeUp) && (_awakeTimer < 0))
         {
             ChangeAnimationState(CRAB_SLEEP);
             _moving = false;
+            _isAsleep = true;
         }
     }
 

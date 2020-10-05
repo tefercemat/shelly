@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public int playerHealth = 4;
+    public int playerMaxHealth = 4;
+    public int playerCurrentHealth;
+    public HealthBar healthBar;
 
     public float speed = 5.0f;
     public float jumpSpeed = 6.0f;
@@ -70,6 +72,9 @@ public class PlayerController : MonoBehaviour
     {
         playerControls.PlatformsInput.Jump.performed += _ => Jump();
         playerControls.PlatformsInput.Shoot.performed += _ => Shoot();
+
+        playerCurrentHealth = playerMaxHealth;
+        healthBar.SetMaxHealth(playerMaxHealth);
     }
 
     // Update is called once per frame
@@ -200,9 +205,10 @@ public class PlayerController : MonoBehaviour
 
     public void ApplyPlayerDamage(int damage)
     {
-        playerHealth -= damage;
+        playerCurrentHealth -= damage;
+        healthBar.SetHealth(playerCurrentHealth);
 
-        if (damage <= 0)
+        if (playerCurrentHealth <= 0)
         {
             Debug.Log("Game Over");
         }

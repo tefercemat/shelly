@@ -289,6 +289,7 @@ MonoBehaviour:
   jumpSpeed: 3
   wakeUpDistance: 5
   player: {fileID: 0}
+  minTimeAwake: 5
 --- !u!61 &2178578516535200775
 BoxCollider2D:
   m_ObjectHideFlags: 0
