@@ -210,7 +210,12 @@ public class PlayerController : MonoBehaviour
 
         if (playerCurrentHealth <= 0)
         {
-            Debug.Log("Game Over");
+            if (GameManager.gm)
+            {
+                // if the gameManager is available, tell it to reset the game
+                GameManager.gm.RestartMenu();
+            }
+
         }
     }
 

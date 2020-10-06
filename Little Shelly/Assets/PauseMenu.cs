@@ -3,28 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
-    
-
-    public GameObject pauseMenuUI;
-    public GameObject GameOverMenuUI;
-
-    public static GameManager gm;
     public static bool gameIsPaused = false;
-
     private PlayerControls playerControls;
+    public GameObject pauseMenuUI;
 
+
+    
 
     private void Awake()
     {
         playerControls = new PlayerControls();
-
-        // setup reference to game manager
-        if (gm == null)
-        {
-            gm = GetComponent<GameManager>();
-        }
     }
 
     private void OnEnable()
@@ -45,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-
+          
     }
 
     public void Pause()
@@ -54,8 +44,7 @@ public class GameManager : MonoBehaviour
         {
             gameIsPaused = false;
             Resume();
-        }
-        else
+        } else
         {
             gameIsPaused = true;
             pauseMenuUI.SetActive(true);
@@ -78,14 +67,6 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartMenu()
-    {
-        gameIsPaused = true;
-        GameOverMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-    }
-
-
-    public void ResetGame()
     {
         Time.timeScale = 1f;
         gameIsPaused = false;

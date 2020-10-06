@@ -41,6 +41,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PauseGame"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""a53f4332-ff8f-4915-95cd-28d17e1521bf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -98,6 +106,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59be785a-7e16-4fdb-b1d5-579c8c03feba"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -109,6 +128,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlatformsInput_Move = m_PlatformsInput.FindAction("Move", throwIfNotFound: true);
         m_PlatformsInput_Jump = m_PlatformsInput.FindAction("Jump", throwIfNotFound: true);
         m_PlatformsInput_Shoot = m_PlatformsInput.FindAction("Shoot", throwIfNotFound: true);
+        m_PlatformsInput_PauseGame = m_PlatformsInput.FindAction("PauseGame", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -161,6 +181,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_PlatformsInput_Move;
     private readonly InputAction m_PlatformsInput_Jump;
     private readonly InputAction m_PlatformsInput_Shoot;
+    private readonly InputAction m_PlatformsInput_PauseGame;
     public struct PlatformsInputActions
     {
         private @PlayerControls m_Wrapper;
@@ -168,6 +189,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_PlatformsInput_Move;
         public InputAction @Jump => m_Wrapper.m_PlatformsInput_Jump;
         public InputAction @Shoot => m_Wrapper.m_PlatformsInput_Shoot;
+        public InputAction @PauseGame => m_Wrapper.m_PlatformsInput_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_PlatformsInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -186,6 +208,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Shoot.started -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnShoot;
+                @PauseGame.started -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnPauseGame;
+                @PauseGame.performed -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnPauseGame;
+                @PauseGame.canceled -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnPauseGame;
             }
             m_Wrapper.m_PlatformsInputActionsCallbackInterface = instance;
             if (instance != null)
@@ -199,6 +224,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @PauseGame.started += instance.OnPauseGame;
+                @PauseGame.performed += instance.OnPauseGame;
+                @PauseGame.canceled += instance.OnPauseGame;
             }
         }
     }
@@ -208,5 +236,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnPauseGame(InputAction.CallbackContext context);
     }
 }
