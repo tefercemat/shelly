@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Water2D
+  m_Shader: {fileID: -6465566751694194690, guid: d731136c226ec4a7fb7ad01ddbf69665, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - RenderTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_3205D6E0:
+        m_Texture: {fileID: 8400000, guid: 075eb73bd555343cfb24983fefe96b87, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - WaterRT:
+        m_Texture: {fileID: 8400000, guid: 84edd4a0edd294bedaf7f1c71490b6ab, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainText:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_5C94C4BF: 9
+    - Vector1_686D97DF: 0.62
+    - Vector1_707CF43: 2
+    - Vector1_E476040: 7.02
+    - _EnableExternalAlpha: 0
+    m_Colors:
+    - Color_43509CCD: {r: 1.0979108, g: 7.0532446, b: 6.75885, a: 0}
+    - Color_B5E8BE41: {r: 0.05490196, g: 0.28431374, b: 0.1627451, a: 0}
+    - Vector2_163C9F4A: {r: 1, g: -1, b: 0, a: 0}
+    - Vector2_56F627E4: {r: 0, g: 0.72, b: 0, a: 0}
+    - Vector2_FD9175B7: {r: 0, g: 0.41, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

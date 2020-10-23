@@ -8,16 +8,24 @@ public class GameManager : MonoBehaviour
     
 
     public GameObject pauseMenuUI;
-    public GameObject GameOverMenuUI;
+    public GameObject gameOverMenuUI;
+
+    // levels to move to on victory and lose
+    public string levelMainMenu;
+    public string levelAfterVictory;
+    public string levelAfterGameOver;
 
     public static GameManager gm;
     public static bool gameIsPaused = false;
 
     private PlayerControls playerControls;
 
+    private bool _waiting;
+
 
     private void Awake()
     {
+
         playerControls = new PlayerControls();
 
         // setup reference to game manager
@@ -40,15 +48,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Setup Player controls
         playerControls.PlatformsInput.PauseGame.performed += _ => Pause();
     }
 
-    private void Update()
-    {
 
-    }
-
-    public void Pause()
+    // Pause the game
+    private void Pause()
     {
         if (gameIsPaused)
         {
@@ -63,24 +69,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Resume()
+    // Resume the Game after Pause
+    private void Resume()
     {
         gameIsPaused = false;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
     }
 
+    // Stop game and go back to the Main Menu
     public void LoadMenu()
     {
         Time.timeScale = 1f;
         gameIsPaused = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene(levelMainMenu);
     }
 
-    public void RestartMenu()
+
+    // Menu displayed at Game Over
+    public void GameOverMenu()
     {
         gameIsPaused = true;
-        GameOverMenuUI.SetActive(true);
+        gameOverMenuUI.SetActive(true);
         Time.timeScale = 0f;
     }
 
@@ -89,11 +99,31 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         gameIsPaused = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(levelAfterGameOver);
     }
 
     public void QuitGame()
     {
         Debug.Log("Quitting Game");
     }
+
+    public void StopTime(float duration)
+    {
+        if (_waiting) return;
+        Time.timeScale = 0f;
+        StartCoroutine(StopTimeDuration(duration));
+        
+    }
+
+    IEnumerator StopTimeDuration(float duration)
+    {
+        _waiting = true;
+        yield return new WaitForSecondsRealtime(duration);
+        Time.timeScale = 1.0f;
+        _waiting = false;
+    }
+
+
+
+
 }

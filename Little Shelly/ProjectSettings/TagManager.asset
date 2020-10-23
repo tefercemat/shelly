@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Boomy
+  - WeaponPoint
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -18,8 +21,8 @@ TagManager:
   - Player
   - Ennemies
   - Bullet
-  - 
-  - 
+  - Boomerang
+  - StunnedEnemy
   - 
   - 
   - 

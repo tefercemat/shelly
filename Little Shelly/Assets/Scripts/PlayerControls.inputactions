@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Shoot",
+                    "name": "Attack",
                     "type": "PassThrough",
                     "id": "cb33ec37-d49f-4503-ba9f-a6ab5025992f",
                     "expectedControlType": "Button",
@@ -33,6 +33,14 @@
                     "name": "PauseGame",
                     "type": "PassThrough",
                     "id": "a53f4332-ff8f-4915-95cd-28d17e1521bf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Recall",
+                    "type": "PassThrough",
+                    "id": "95f120da-ea2d-4544-86d0-25d15d8631bd",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -90,7 +98,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Shoot",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -102,6 +110,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6c6837c1-a93b-44d7-a62b-89e9a802051e",
+                    "path": "<Keyboard>/l",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Recall",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

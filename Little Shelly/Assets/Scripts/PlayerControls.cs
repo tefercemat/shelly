@@ -35,7 +35,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Shoot"",
+                    ""name"": ""Attack"",
                     ""type"": ""PassThrough"",
                     ""id"": ""cb33ec37-d49f-4503-ba9f-a6ab5025992f"",
                     ""expectedControlType"": ""Button"",
@@ -46,6 +46,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""PauseGame"",
                     ""type"": ""PassThrough"",
                     ""id"": ""a53f4332-ff8f-4915-95cd-28d17e1521bf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Recall"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""95f120da-ea2d-4544-86d0-25d15d8631bd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -103,7 +111,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Shoot"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -117,6 +125,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""PauseGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c6837c1-a93b-44d7-a62b-89e9a802051e"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Recall"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -127,8 +146,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlatformsInput = asset.FindActionMap("PlatformsInput", throwIfNotFound: true);
         m_PlatformsInput_Move = m_PlatformsInput.FindAction("Move", throwIfNotFound: true);
         m_PlatformsInput_Jump = m_PlatformsInput.FindAction("Jump", throwIfNotFound: true);
-        m_PlatformsInput_Shoot = m_PlatformsInput.FindAction("Shoot", throwIfNotFound: true);
+        m_PlatformsInput_Attack = m_PlatformsInput.FindAction("Attack", throwIfNotFound: true);
         m_PlatformsInput_PauseGame = m_PlatformsInput.FindAction("PauseGame", throwIfNotFound: true);
+        m_PlatformsInput_Recall = m_PlatformsInput.FindAction("Recall", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -180,16 +200,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private IPlatformsInputActions m_PlatformsInputActionsCallbackInterface;
     private readonly InputAction m_PlatformsInput_Move;
     private readonly InputAction m_PlatformsInput_Jump;
-    private readonly InputAction m_PlatformsInput_Shoot;
+    private readonly InputAction m_PlatformsInput_Attack;
     private readonly InputAction m_PlatformsInput_PauseGame;
+    private readonly InputAction m_PlatformsInput_Recall;
     public struct PlatformsInputActions
     {
         private @PlayerControls m_Wrapper;
         public PlatformsInputActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlatformsInput_Move;
         public InputAction @Jump => m_Wrapper.m_PlatformsInput_Jump;
-        public InputAction @Shoot => m_Wrapper.m_PlatformsInput_Shoot;
+        public InputAction @Attack => m_Wrapper.m_PlatformsInput_Attack;
         public InputAction @PauseGame => m_Wrapper.m_PlatformsInput_PauseGame;
+        public InputAction @Recall => m_Wrapper.m_PlatformsInput_Recall;
         public InputActionMap Get() { return m_Wrapper.m_PlatformsInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -205,12 +227,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnJump;
-                @Shoot.started -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnShoot;
-                @Shoot.performed -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnShoot;
-                @Shoot.canceled -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnShoot;
+                @Attack.started -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnAttack;
                 @PauseGame.started -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnPauseGame;
                 @PauseGame.performed -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnPauseGame;
                 @PauseGame.canceled -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnPauseGame;
+                @Recall.started -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnRecall;
+                @Recall.performed -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnRecall;
+                @Recall.canceled -= m_Wrapper.m_PlatformsInputActionsCallbackInterface.OnRecall;
             }
             m_Wrapper.m_PlatformsInputActionsCallbackInterface = instance;
             if (instance != null)
@@ -221,12 +246,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @Shoot.started += instance.OnShoot;
-                @Shoot.performed += instance.OnShoot;
-                @Shoot.canceled += instance.OnShoot;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
                 @PauseGame.started += instance.OnPauseGame;
                 @PauseGame.performed += instance.OnPauseGame;
                 @PauseGame.canceled += instance.OnPauseGame;
+                @Recall.started += instance.OnRecall;
+                @Recall.performed += instance.OnRecall;
+                @Recall.canceled += instance.OnRecall;
             }
         }
     }
@@ -235,7 +263,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnShoot(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
+        void OnRecall(InputAction.CallbackContext context);
     }
 }
